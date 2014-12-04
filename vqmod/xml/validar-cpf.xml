@@ -1,0 +1,43 @@
+<modification>
+	<id>Validar CPF</id>
+	<version>1.0.0</version>
+	<vqmver>2.1.6</vqmver>
+	<author>wallasfaria@hotmail.com</author>
+	
+	<file name="catalog/controller/account/register.php">
+		<operation>
+			<search position="before"><![CDATA[if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && empty($this->request->post['tax_id'])) {]]></search>
+			<add><![CDATA[
+				$this->load->model('tool/cpf');
+				if (!$this->model_tool_cpf->validar($this->request->post['tax_id'])) {
+					$this->error['tax_id'] = "Atenção: CPF inválido";
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/controller/checkout/payment_address.php">
+		<operation>
+			<search position="before"><![CDATA[if ($customer_group_info['tax_id_display'] && $customer_group_info['tax_id_required'] && empty($this->request->post['tax_id'])) {]]></search>
+			<add><![CDATA[
+				$this->load->model('tool/cpf');
+				if (!$this->model_tool_cpf->validar($this->request->post['tax_id'])) {
+					$json['error']['tax_id'] = "Atenção: CPF inválido";
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/controller/checkout/register.php">
+		<operation>
+			<search position="before"><![CDATA[if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && empty($this->request->post['tax_id'])) {]]></search>
+			<add><![CDATA[
+				$this->load->model('tool/cpf');
+				if (!$this->model_tool_cpf->validar($this->request->post['tax_id'])) {
+					$json['error']['tax_id'] = "Atenção: CPF inválido";
+				}
+			]]></add>
+		</operation>
+	</file>
+
+</modification>
